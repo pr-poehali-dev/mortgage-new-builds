@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
+import { toast } from 'sonner';
 
 export const SectionsContent = () => {
   const [name, setName] = useState('');
@@ -37,6 +38,9 @@ export const SectionsContent = () => {
       const data = await response.json();
       
       if (data.whatsappUrl) {
+        toast.success('Заявка отправлена!', {
+          description: 'Мы свяжемся с вами в ближайшее время',
+        });
         window.open(data.whatsappUrl, '_blank');
       }
 
@@ -45,7 +49,9 @@ export const SectionsContent = () => {
       setMessage('');
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.');
+      toast.error('Ошибка отправки', {
+        description: 'Попробуйте позже или свяжитесь с нами по телефону',
+      });
     } finally {
       setIsSubmitting(false);
     }

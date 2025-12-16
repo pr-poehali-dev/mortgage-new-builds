@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import Icon from '@/components/ui/icon';
+import { toast } from 'sonner';
 
 export const CalculatorSection = () => {
   const [loanAmount, setLoanAmount] = useState(5000000);
@@ -60,10 +61,18 @@ export const CalculatorSection = () => {
 
       const data = await response.json();
       if (data.success && data.whatsappUrl) {
+        toast.success('Заявка отправлена!', {
+          description: 'Мы свяжемся с вами в ближайшее время',
+        });
         window.open(data.whatsappUrl, '_blank');
+        setName('');
+        setPhone('');
       }
     } catch (error) {
       console.error('Ошибка отправки:', error);
+      toast.error('Ошибка отправки', {
+        description: 'Попробуйте позже или свяжитесь с нами по телефону',
+      });
     } finally {
       setIsSubmitting(false);
     }
