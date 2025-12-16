@@ -36,7 +36,7 @@ export const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
                 className="text-lg px-8"
                 asChild
               >
-                <a href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">
+                <a href="https://t.me/iNexus63" target="_blank" rel="noopener noreferrer">
                   <Icon name="MessageCircle" size={20} className="mr-2" />
                   Консультация
                 </a>

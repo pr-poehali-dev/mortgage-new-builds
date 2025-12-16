@@ -17,7 +17,7 @@
       "expectedBody": {
         "success": true,
         "message": "string",
-        "whatsappUrl": "string"
+        "telegramUrl": "string"
       },
       "bodyMatcher": "partial"
     },

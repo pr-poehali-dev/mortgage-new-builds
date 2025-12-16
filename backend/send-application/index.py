@@ -77,7 +77,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         if message:
             text += f"\n\nСообщение:\n{message}"
     
-    telegram_username = "your_username"
+    telegram_username = "iNexus63"
     telegram_url = f"https://t.me/{telegram_username}?text={text}"
     
     return {
