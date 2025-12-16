@@ -36,27 +36,27 @@ const Index = () => {
 
   const properties = [
     {
-      title: "ЖК Новый Горизонт",
-      location: "Москва, Кутузовский проспект",
-      price: "от 8 500 000 ₽",
+      title: "ЖК Волжские Паруса",
+      location: "Самара, Промышленный район",
+      price: "от 3 800 000 ₽",
       image: "https://cdn.poehali.dev/projects/1a7c493f-b51e-41cc-b773-168038db319d/files/dac2f64c-92dc-4821-adde-b4e02f8b3070.jpg",
-      deadline: "IV квартал 2025",
+      deadline: "III квартал 2025",
       rooms: "1-3 комнатные"
     },
     {
-      title: "ЖК Солнечный Парк",
-      location: "Санкт-Петербург, Приморский район",
-      price: "от 6 200 000 ₽",
+      title: "ЖК Самарский",
+      location: "Самара, Советский район",
+      price: "от 4 200 000 ₽",
       image: "https://cdn.poehali.dev/projects/1a7c493f-b51e-41cc-b773-168038db319d/files/dac2f64c-92dc-4821-adde-b4e02f8b3070.jpg",
-      deadline: "II квартал 2026",
+      deadline: "IV квартал 2025",
       rooms: "1-2 комнатные"
     },
     {
-      title: "ЖК Зеленая Долина",
-      location: "Казань, Приволжский район",
-      price: "от 4 800 000 ₽",
+      title: "ЖК Речной Бульвар",
+      location: "Самара, Куйбышевский район",
+      price: "от 3 500 000 ₽",
       image: "https://cdn.poehali.dev/projects/1a7c493f-b51e-41cc-b773-168038db319d/files/dac2f64c-92dc-4821-adde-b4e02f8b3070.jpg",
-      deadline: "I квартал 2026",
+      deadline: "II квартал 2026",
       rooms: "1-3 комнатные"
     }
   ];
@@ -126,13 +126,13 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in">
               <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                Ипотека на новостройки{' '}
+                Ипотека на новостройки в Самаре{' '}
                 <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   от 5%
                 </span>
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Одобрение за 24 часа. Помощь с документами. Более 500 новостроек по всей России.
+                Одобрение за 24 часа. Помощь с документами. Лучшие новостройки Самары.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
@@ -158,7 +158,7 @@ const Index = () => {
                   <div className="text-sm text-muted-foreground">Одобрение</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-primary mb-1">500+</div>
+                  <div className="text-3xl font-bold text-primary mb-1">50+</div>
                   <div className="text-sm text-muted-foreground">Новостроек</div>
                 </div>
               </div>
@@ -344,8 +344,8 @@ const Index = () => {
       <section id="properties" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-4xl font-bold mb-4">Новостройки</h2>
-            <p className="text-xl text-muted-foreground">Актуальные объекты для покупки в ипотеку</p>
+            <h2 className="text-4xl font-bold mb-4">Новостройки Самары</h2>
+            <p className="text-xl text-muted-foreground">Актуальные объекты в Самаре для покупки в ипотеку</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -440,7 +440,7 @@ const Index = () => {
                   <Icon name="Phone" size={28} className="text-primary" />
                 </div>
                 <h3 className="font-semibold mb-2">Телефон</h3>
-                <p className="text-muted-foreground">+7 (495) 123-45-67</p>
+                <p className="text-muted-foreground">+7 (846) 123-45-67</p>
               </div>
               <div className="text-center">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
@@ -454,7 +454,7 @@ const Index = () => {
                   <Icon name="MapPin" size={28} className="text-primary" />
                 </div>
                 <h3 className="font-semibold mb-2">Адрес</h3>
-                <p className="text-muted-foreground">Москва, ул. Тверская, 1</p>
+                <p className="text-muted-foreground">Самара, ул. Ленинградская, 1</p>
               </div>
             </div>
           </div>
@@ -474,7 +474,7 @@ const Index = () => {
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Программы</h4>
+              <h4 className="font-semibold mb-4">Программы в Самаре</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>Семейная ипотека</li>
                 <li>IT-ипотека</li>
@@ -492,9 +492,9 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Контакты</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li>+7 (495) 123-45-67</li>
+                <li>+7 (846) 123-45-67</li>
                 <li>info@ipotekadom.ru</li>
-                <li>Москва, ул. Тверская, 1</li>
+                <li>Самара, ул. Ленинградская, 1</li>
               </ul>
             </div>
           </div>
