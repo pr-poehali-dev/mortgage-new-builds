@@ -37,8 +37,8 @@ export const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
                 asChild
               >
                 <a href="https://t.me/iNexus63" target="_blank" rel="noopener noreferrer">
-                  <Icon name="MessageCircle" size={20} className="mr-2" />
-                  Консультация
+                  <Icon name="Send" size={20} className="mr-2" />
+                  Консультация в Telegram
                 </a>
               </Button>
             </div>
