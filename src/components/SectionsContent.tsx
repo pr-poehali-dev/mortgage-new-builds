@@ -37,11 +37,11 @@ export const SectionsContent = () => {
 
       const data = await response.json();
       
-      if (data.whatsappUrl) {
+      if (data.telegramUrl) {
         toast.success('Заявка отправлена!', {
           description: 'Мы свяжемся с вами в ближайшее время',
         });
-        window.open(data.whatsappUrl, '_blank');
+        window.open(data.telegramUrl, '_blank');
       }
 
       setName('');

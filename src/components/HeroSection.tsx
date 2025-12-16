@@ -36,7 +36,7 @@ export const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
                 className="text-lg px-8"
                 asChild
               >
-                <a href="https://wa.me/79991574764?text=Здравствуйте!%20Интересует%20ипотека%20на%20новостройку" target="_blank" rel="noopener noreferrer">
+                <a href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">
                   <Icon name="MessageCircle" size={20} className="mr-2" />
                   Консультация
                 </a>

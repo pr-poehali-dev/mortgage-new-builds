@@ -60,11 +60,11 @@ export const CalculatorSection = () => {
       });
 
       const data = await response.json();
-      if (data.success && data.whatsappUrl) {
+      if (data.success && data.telegramUrl) {
         toast.success('Заявка отправлена!', {
           description: 'Мы свяжемся с вами в ближайшее время',
         });
-        window.open(data.whatsappUrl, '_blank');
+        window.open(data.telegramUrl, '_blank');
         setName('');
         setPhone('');
       }

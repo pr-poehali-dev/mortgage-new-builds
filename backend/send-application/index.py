@@ -4,9 +4,9 @@ from typing import Dict, Any
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
-    Отправка заявки с формы на WhatsApp (через ссылку)
+    Отправка заявки с формы в Telegram (через ссылку)
     Принимает: POST с полями name, phone, message (опционально)
-    Возвращает: ссылку на WhatsApp с предзаполненным текстом
+    Возвращает: ссылку на Telegram с предзаполненным текстом
     """
     method: str = event.get('httpMethod', 'GET')
     
@@ -77,9 +77,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         if message:
             text += f"\n\nСообщение:\n{message}"
     
-    whatsapp_number = "79991574764"
-    encoded_text = text.replace(' ', '%20').replace('\n', '%0A')
-    whatsapp_url = f"https://wa.me/{whatsapp_number}?text={encoded_text}"
+    telegram_username = "your_username"
+    telegram_url = f"https://t.me/{telegram_username}?text={text}"
     
     return {
         'statusCode': 200,
@@ -90,7 +89,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         'body': json.dumps({
             'success': True,
             'message': 'Заявка принята',
-            'whatsappUrl': whatsapp_url
+            'telegramUrl': telegram_url
         }),
         'isBase64Encoded': False
     }
