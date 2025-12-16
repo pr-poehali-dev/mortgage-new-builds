@@ -1,0 +1,52 @@
+{
+  "tests": [
+    {
+      "name": "Send calculator application",
+      "method": "POST",
+      "body": {
+        "name": "Иван Иванов",
+        "phone": "+7 (999) 123-45-67",
+        "formType": "calculator",
+        "loanAmount": "5000000",
+        "initialPayment": "1000000",
+        "loanTerm": "20",
+        "interestRate": "10.5",
+        "monthlyPayment": "45000"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "message": "string",
+        "whatsappUrl": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Send contact application",
+      "method": "POST",
+      "body": {
+        "name": "Петр Петров",
+        "phone": "+7 (999) 987-65-43",
+        "message": "Интересует семейная ипотека",
+        "formType": "contact"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Missing required fields",
+      "method": "POST",
+      "body": {
+        "name": "Иван"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

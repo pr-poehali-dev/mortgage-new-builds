@@ -32,9 +32,11 @@ export const Header = ({ onScrollToSection }: HeaderProps) => {
             Контакты
           </button>
         </div>
-        <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-          <Icon name="Phone" size={16} className="mr-2" />
-          Позвонить
+        <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
+          <a href="tel:+79991574764">
+            <Icon name="Phone" size={16} className="mr-2" />
+            Позвонить
+          </a>
         </Button>
       </nav>
     </header>

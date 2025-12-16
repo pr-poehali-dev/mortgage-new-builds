@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -6,6 +7,49 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 
 export const SectionsContent = () => {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://functions.poehali.dev/01694c6d-e041-4cfe-9a8e-9dd518a53e40', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          message,
+          formType: 'contact'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      const data = await response.json();
+      
+      if (data.whatsappUrl) {
+        window.open(data.whatsappUrl, '_blank');
+      }
+
+      setName('');
+      setPhone('');
+      setMessage('');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   const properties = [
     {
       title: "ЖК Волжские Паруса",
@@ -175,14 +219,27 @@ export const SectionsContent = () => {
                   <CardDescription>Мы перезвоним в течение 15 минут</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form className="space-y-4">
+                  <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
                       <Label htmlFor="contact-name">Имя *</Label>
-                      <Input id="contact-name" placeholder="Ваше имя" required />
+                      <Input 
+                        id="contact-name" 
+                        placeholder="Ваше имя" 
+                        required 
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
                     </div>
                     <div>
                       <Label htmlFor="contact-phone">Телефон *</Label>
-                      <Input id="contact-phone" type="tel" placeholder="+7 (___) ___-__-__" required />
+                      <Input 
+                        id="contact-phone" 
+                        type="tel" 
+                        placeholder="+7 (___) ___-__-__" 
+                        required 
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
                     </div>
                     <div>
                       <Label htmlFor="contact-message">Сообщение</Label>
@@ -190,11 +247,17 @@ export const SectionsContent = () => {
                         id="contact-message"
                         className="w-full min-h-[100px] px-3 py-2 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-primary"
                         placeholder="Расскажите о ваших пожеланиях"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">
-                      Отправить
-                      <Icon name="Send" size={16} className="ml-2" />
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'Отправка...' : 'Отправить'}
+                      {!isSubmitting && <Icon name="Send" size={16} className="ml-2" />}
                     </Button>
                   </form>
                 </CardContent>

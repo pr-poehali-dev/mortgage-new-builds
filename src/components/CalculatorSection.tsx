@@ -11,6 +11,9 @@ export const CalculatorSection = () => {
   const [initialPayment, setInitialPayment] = useState(1000000);
   const [loanTerm, setLoanTerm] = useState(20);
   const [interestRate, setInterestRate] = useState(10.5);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const calculateMortgage = () => {
     const principal = loanAmount - initialPayment;
@@ -33,6 +36,39 @@ export const CalculatorSection = () => {
 
   const result = calculateMortgage();
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://functions.poehali.dev/01694c6d-e041-4cfe-9a8e-9dd518a53e40', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          formType: 'calculator',
+          loanAmount: loanAmount.toLocaleString('ru-RU'),
+          initialPayment: initialPayment.toLocaleString('ru-RU'),
+          loanTerm,
+          interestRate,
+          monthlyPayment: result.monthlyPayment.toLocaleString('ru-RU')
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success && data.whatsappUrl) {
+        window.open(data.whatsappUrl, '_blank');
+      }
+    } catch (error) {
+      console.error('Ошибка отправки:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="calculator" className="py-20 bg-gradient-to-br from-primary/5 to-secondary/5">
       <div className="container mx-auto px-4">
@@ -44,15 +80,28 @@ export const CalculatorSection = () => {
 
           <Card className="border-0 shadow-2xl animate-scale-in">
             <CardContent className="pt-8">
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <Label htmlFor="calc-name">Ваше имя *</Label>
-                    <Input id="calc-name" placeholder="Иван Иванов" required />
+                    <Input 
+                      id="calc-name" 
+                      placeholder="Иван Иванов" 
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required 
+                    />
                   </div>
                   <div>
                     <Label htmlFor="calc-phone">Телефон *</Label>
-                    <Input id="calc-phone" type="tel" placeholder="+7 (___) ___-__-__" required />
+                    <Input 
+                      id="calc-phone" 
+                      type="tel" 
+                      placeholder="+7 (___) ___-__-__" 
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required 
+                    />
                   </div>
                 </div>
 
@@ -165,8 +214,13 @@ export const CalculatorSection = () => {
                   </div>
                 </div>
 
-                <Button type="submit" size="lg" className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity text-lg">
-                  Отправить заявку
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity text-lg"
+                >
+                  {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
                   <Icon name="Send" size={20} className="ml-2" />
                 </Button>
               </form>

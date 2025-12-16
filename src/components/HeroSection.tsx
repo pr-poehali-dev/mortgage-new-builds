@@ -30,9 +30,16 @@ export const HeroSection = ({ onScrollToSection }: HeroSectionProps) => {
                 Рассчитать ипотеку
                 <Icon name="Calculator" size={20} className="ml-2" />
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8">
-                <Icon name="MessageCircle" size={20} className="mr-2" />
-                Консультация
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-lg px-8"
+                asChild
+              >
+                <a href="https://wa.me/79991574764?text=Здравствуйте!%20Интересует%20ипотека%20на%20новостройку" target="_blank" rel="noopener noreferrer">
+                  <Icon name="MessageCircle" size={20} className="mr-2" />
+                  Консультация
+                </a>
               </Button>
             </div>
             <div className="grid grid-cols-3 gap-6 mt-12">
