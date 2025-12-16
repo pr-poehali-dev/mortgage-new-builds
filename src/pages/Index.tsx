@@ -175,136 +175,131 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="calculator" className="py-20 bg-white">
+      <section id="calculator" className="py-20 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-4xl font-bold mb-4">Калькулятор ипотеки</h2>
-            <p className="text-xl text-muted-foreground">Рассчитайте ваш ежемесячный платёж за 1 минуту</p>
-          </div>
-          
-          <Card className="max-w-5xl mx-auto shadow-2xl border-0 animate-slide-up">
-            <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5">
-              <CardTitle className="text-2xl">Параметры кредита</CardTitle>
-              <CardDescription>Настройте условия под ваши потребности</CardDescription>
-            </CardHeader>
-            <CardContent className="pt-8">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-8">
-                  <div>
-                    <div className="flex justify-between mb-4">
-                      <Label className="text-base">Стоимость квартиры</Label>
-                      <span className="text-lg font-semibold text-primary">
-                        {loanAmount.toLocaleString('ru-RU')} ₽
-                      </span>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12 animate-fade-in">
+              <h2 className="text-4xl font-bold mb-4">Рассчитайте ипотеку</h2>
+              <p className="text-xl text-muted-foreground">Оставьте заявку и получите персональный расчёт</p>
+            </div>
+
+            <Card className="border-0 shadow-2xl animate-scale-in">
+              <CardContent className="pt-8">
+                <form className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <Label htmlFor="calc-name">Ваше имя *</Label>
+                      <Input id="calc-name" placeholder="Иван Иванов" className="mt-2" required />
                     </div>
-                    <Slider
-                      value={[loanAmount]}
-                      onValueChange={(value) => setLoanAmount(value[0])}
-                      min={1000000}
-                      max={20000000}
-                      step={100000}
-                      className="mb-2"
-                    />
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>1 млн ₽</span>
-                      <span>20 млн ₽</span>
+                    <div>
+                      <Label htmlFor="calc-phone">Телефон *</Label>
+                      <Input id="calc-phone" type="tel" placeholder="+7 (999) 123-45-67" className="mt-2" required />
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between mb-4">
-                      <Label className="text-base">Первоначальный взнос</Label>
-                      <span className="text-lg font-semibold text-primary">
-                        {initialPayment.toLocaleString('ru-RU')} ₽
-                      </span>
+                    <Label htmlFor="calc-email">Email</Label>
+                    <Input id="calc-email" type="email" placeholder="example@mail.ru" className="mt-2" />
+                  </div>
+
+                  <div className="space-y-4 pt-4">
+                    <div>
+                      <div className="flex justify-between mb-4">
+                        <Label className="text-base">Стоимость квартиры</Label>
+                        <span className="text-lg font-semibold text-primary">
+                          {loanAmount.toLocaleString('ru-RU')} ₽
+                        </span>
+                      </div>
+                      <Slider
+                        value={[loanAmount]}
+                        onValueChange={(value) => setLoanAmount(value[0])}
+                        min={1000000}
+                        max={20000000}
+                        step={100000}
+                        className="mb-2"
+                      />
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>1 млн ₽</span>
+                        <span>20 млн ₽</span>
+                      </div>
                     </div>
-                    <Slider
-                      value={[initialPayment]}
-                      onValueChange={(value) => setInitialPayment(value[0])}
-                      min={loanAmount * 0.15}
-                      max={loanAmount * 0.8}
-                      step={50000}
-                      className="mb-2"
-                    />
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>15%</span>
-                      <span>80%</span>
+
+                    <div>
+                      <div className="flex justify-between mb-4">
+                        <Label className="text-base">Первоначальный взнос</Label>
+                        <span className="text-lg font-semibold text-primary">
+                          {initialPayment.toLocaleString('ru-RU')} ₽
+                        </span>
+                      </div>
+                      <Slider
+                        value={[initialPayment]}
+                        onValueChange={(value) => setInitialPayment(value[0])}
+                        min={loanAmount * 0.15}
+                        max={loanAmount * 0.8}
+                        step={50000}
+                        className="mb-2"
+                      />
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>15%</span>
+                        <span>80%</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between mb-4">
+                        <Label className="text-base">Срок кредита</Label>
+                        <span className="text-lg font-semibold text-primary">{loanTerm} лет</span>
+                      </div>
+                      <Slider
+                        value={[loanTerm]}
+                        onValueChange={(value) => setLoanTerm(value[0])}
+                        min={1}
+                        max={30}
+                        step={1}
+                        className="mb-2"
+                      />
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>1 год</span>
+                        <span>30 лет</span>
+                      </div>
                     </div>
                   </div>
 
-                  <div>
-                    <div className="flex justify-between mb-4">
-                      <Label className="text-base">Срок кредита</Label>
-                      <span className="text-lg font-semibold text-primary">{loanTerm} лет</span>
+                  <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl p-6 space-y-4">
+                    <div>
+                      <div className="text-sm text-muted-foreground mb-2">Предварительный ежемесячный платёж</div>
+                      <div className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        {result.monthlyPayment.toLocaleString('ru-RU')} ₽
+                      </div>
                     </div>
-                    <Slider
-                      value={[loanTerm]}
-                      onValueChange={(value) => setLoanTerm(value[0])}
-                      min={1}
-                      max={30}
-                      step={1}
-                      className="mb-2"
-                    />
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>1 год</span>
-                      <span>30 лет</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between mb-4">
-                      <Label className="text-base">Процентная ставка</Label>
-                      <span className="text-lg font-semibold text-primary">{interestRate}%</span>
-                    </div>
-                    <Slider
-                      value={[interestRate]}
-                      onValueChange={(value) => setInterestRate(value[0])}
-                      min={5}
-                      max={18}
-                      step={0.1}
-                      className="mb-2"
-                    />
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>5%</span>
-                      <span>18%</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl p-8 flex flex-col justify-center space-y-6">
-                  <div>
-                    <div className="text-sm text-muted-foreground mb-2">Ежемесячный платёж</div>
-                    <div className="text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                      {result.monthlyPayment.toLocaleString('ru-RU')} ₽
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 pt-6 border-t border-border">
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Сумма кредита</span>
-                      <span className="font-semibold">{result.principal.toLocaleString('ru-RU')} ₽</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Переплата</span>
-                      <span className="font-semibold text-orange-500">{result.overpayment.toLocaleString('ru-RU')} ₽</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Общая сумма</span>
-                      <span className="font-semibold">{result.totalPayment.toLocaleString('ru-RU')} ₽</span>
+                    <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border/50">
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Сумма кредита</div>
+                        <div className="font-semibold">{result.principal.toLocaleString('ru-RU')} ₽</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Переплата</div>
+                        <div className="font-semibold text-orange-500">{result.overpayment.toLocaleString('ru-RU')} ₽</div>
+                      </div>
                     </div>
                   </div>
 
                   <Button 
-                    className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-lg py-6 mt-4"
-                    size="lg"
+                    type="submit" 
+                    size="lg" 
+                    className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-lg py-6"
                   >
-                    <Icon name="CheckCircle" size={20} className="mr-2" />
-                    Оставить заявку
+                    <Icon name="Calculator" size={20} className="mr-2" />
+                    Получить точный расчёт
                   </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+
+                  <p className="text-xs text-center text-muted-foreground">
+                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
