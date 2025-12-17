@@ -3,6 +3,7 @@ import { FeaturesSection } from '@/components/FeaturesSection';
 import { TemplatesSection } from '@/components/TemplatesSection';
 import { BuilderSection } from '@/components/BuilderSection';
 import { PricingSection } from '@/components/PricingSection';
+import { AuthSection } from '@/components/AuthSection';
 import { CTASection } from '@/components/CTASection';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -22,6 +23,7 @@ const Index = () => {
         <BuilderSection />
         <TemplatesSection />
         <PricingSection />
+        <AuthSection />
         <CTASection />
       </main>
       <Footer />
