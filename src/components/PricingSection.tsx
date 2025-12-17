@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { AuthModal } from './AuthModal';
+import { auth } from '@/lib/auth';
+import { useToast } from '@/hooks/use-toast';
 
 const plans = [
   {
@@ -64,9 +66,25 @@ const plans = [
 
 export const PricingSection = () => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { toast } = useToast();
 
-  const handlePlanClick = () => {
-    setAuthModalOpen(true);
+  useEffect(() => {
+    setIsAuthenticated(auth.isAuthenticated());
+    const handleAuthChange = () => setIsAuthenticated(auth.isAuthenticated());
+    window.addEventListener('auth-change', handleAuthChange);
+    return () => window.removeEventListener('auth-change', handleAuthChange);
+  }, []);
+
+  const handlePlanClick = (planName: string) => {
+    if (!isAuthenticated) {
+      setAuthModalOpen(true);
+      return;
+    }
+    toast({
+      title: 'Оформление подписки',
+      description: `Вы выбрали тариф "${planName}". Функция оплаты скоро будет доступна!`,
+    });
   };
   return (
     <section id="pricing" className="py-20 md:py-32">
@@ -124,7 +142,7 @@ export const PricingSection = () => {
                   }`}
                   variant={plan.highlighted ? 'default' : 'outline'}
                   size="lg"
-                  onClick={handlePlanClick}
+                  onClick={() => handlePlanClick(plan.name)}
                 >
                   {plan.cta}
                 </Button>

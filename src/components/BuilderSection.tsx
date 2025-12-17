@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
@@ -6,11 +6,20 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { AuthModal } from './AuthModal';
+import { auth } from '@/lib/auth';
 
 export const BuilderSection = () => {
   const [botName, setBotName] = useState('');
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    setIsAuthenticated(auth.isAuthenticated());
+    const handleAuthChange = () => setIsAuthenticated(auth.isAuthenticated());
+    window.addEventListener('auth-change', handleAuthChange);
+    return () => window.removeEventListener('auth-change', handleAuthChange);
+  }, []);
 
   const handleLaunchBot = () => {
     if (!botName.trim()) {
@@ -21,15 +30,33 @@ export const BuilderSection = () => {
       });
       return;
     }
-    setAuthModalOpen(true);
+    if (!isAuthenticated) {
+      toast({
+        title: 'Требуется регистрация',
+        description: 'Зарегистрируйтесь чтобы запустить бота',
+      });
+      setAuthModalOpen(true);
+      return;
+    }
+    toast({
+      title: 'Бот запускается!',
+      description: `Бот "${botName}" создан и готов к настройке`,
+    });
   };
 
   const handleExportCode = () => {
+    if (!isAuthenticated) {
+      toast({
+        title: 'Требуется регистрация',
+        description: 'Зарегистрируйтесь чтобы экспортировать код',
+      });
+      setAuthModalOpen(true);
+      return;
+    }
     toast({
       title: 'Экспорт кода',
-      description: 'Функция доступна после регистрации',
+      description: 'Функция экспорта скоро будет доступна!',
     });
-    setAuthModalOpen(true);
   };
 
   return (

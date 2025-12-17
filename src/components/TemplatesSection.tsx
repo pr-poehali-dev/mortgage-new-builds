@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 import { AuthModal } from './AuthModal';
+import { auth } from '@/lib/auth';
 
 const templates = [
   {
@@ -59,14 +60,29 @@ const templates = [
 
 export const TemplatesSection = () => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { toast } = useToast();
 
+  useEffect(() => {
+    setIsAuthenticated(auth.isAuthenticated());
+    const handleAuthChange = () => setIsAuthenticated(auth.isAuthenticated());
+    window.addEventListener('auth-change', handleAuthChange);
+    return () => window.removeEventListener('auth-change', handleAuthChange);
+  }, []);
+
   const handleUseTemplate = (templateName: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: 'Требуется регистрация',
+        description: `Зарегистрируйтесь чтобы использовать "${templateName}"`,
+      });
+      setAuthModalOpen(true);
+      return;
+    }
     toast({
-      title: 'Шаблон выбран',
-      description: `Зарегистрируйтесь чтобы использовать "${templateName}"`,
+      title: 'Шаблон применён!',
+      description: `Бот "${templateName}" создан и готов к настройке`,
     });
-    setAuthModalOpen(true);
   };
   return (
     <section id="templates" className="py-20 md:py-32 bg-muted/30">
@@ -145,7 +161,16 @@ export const TemplatesSection = () => {
             variant="outline" 
             size="lg" 
             className="group"
-            onClick={() => setAuthModalOpen(true)}
+            onClick={() => {
+              if (!isAuthenticated) {
+                setAuthModalOpen(true);
+              } else {
+                toast({
+                  title: 'Каталог шаблонов',
+                  description: 'Функция просмотра всех шаблонов скоро будет доступна!',
+                });
+              }
+            }}
           >
             Смотреть все шаблоны
             <Icon name="ArrowRight" size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
