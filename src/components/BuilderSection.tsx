@@ -4,9 +4,33 @@ import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
+import { AuthModal } from './AuthModal';
 
 export const BuilderSection = () => {
   const [botName, setBotName] = useState('');
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleLaunchBot = () => {
+    if (!botName.trim()) {
+      toast({
+        variant: 'destructive',
+        title: 'Ошибка',
+        description: 'Введите название бота',
+      });
+      return;
+    }
+    setAuthModalOpen(true);
+  };
+
+  const handleExportCode = () => {
+    toast({
+      title: 'Экспорт кода',
+      description: 'Функция доступна после регистрации',
+    });
+    setAuthModalOpen(true);
+  };
 
   return (
     <section id="builder" className="py-20 md:py-32 bg-muted/30">
@@ -199,12 +223,19 @@ export const BuilderSection = () => {
                 />
               </div>
               
-              <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+              <Button 
+                className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90"
+                onClick={handleLaunchBot}
+              >
                 <Icon name="Rocket" size={16} className="mr-2" />
                 Запустить бота
               </Button>
               
-              <Button variant="outline" className="w-full">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={handleExportCode}
+              >
                 <Icon name="Download" size={16} className="mr-2" />
                 Экспортировать код
               </Button>
@@ -212,6 +243,12 @@ export const BuilderSection = () => {
           </Card>
         </div>
       </div>
+      
+      <AuthModal 
+        open={authModalOpen} 
+        onOpenChange={setAuthModalOpen}
+        defaultTab="register"
+      />
     </section>
   );
 };

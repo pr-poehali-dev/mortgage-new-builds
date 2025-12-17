@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import { AuthModal } from './AuthModal';
 
 const plans = [
   {
@@ -61,6 +63,11 @@ const plans = [
 ];
 
 export const PricingSection = () => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+
+  const handlePlanClick = () => {
+    setAuthModalOpen(true);
+  };
   return (
     <section id="pricing" className="py-20 md:py-32">
       <div className="container mx-auto px-4">
@@ -117,6 +124,7 @@ export const PricingSection = () => {
                   }`}
                   variant={plan.highlighted ? 'default' : 'outline'}
                   size="lg"
+                  onClick={handlePlanClick}
                 >
                   {plan.cta}
                 </Button>
@@ -157,12 +165,22 @@ export const PricingSection = () => {
           <p className="text-muted-foreground mb-4">
             Нужно индивидуальное решение?
           </p>
-          <Button variant="outline" size="lg">
+          <Button 
+            variant="outline" 
+            size="lg"
+            onClick={() => window.location.href = 'mailto:support@botbuilder.com'}
+          >
             <Icon name="Mail" size={16} className="mr-2" />
             Связаться с отделом продаж
           </Button>
         </div>
       </div>
+      
+      <AuthModal 
+        open={authModalOpen} 
+        onOpenChange={setAuthModalOpen}
+        defaultTab="register"
+      />
     </section>
   );
 };

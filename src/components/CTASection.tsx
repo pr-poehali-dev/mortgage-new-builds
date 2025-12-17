@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import { AuthModal } from './AuthModal';
 
 export const CTASection = () => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   return (
     <section className="py-20 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-secondary relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-white/10"></div>
@@ -26,6 +29,7 @@ export const CTASection = () => {
             <Button 
               size="lg" 
               className="bg-white text-primary hover:bg-white/90 text-lg px-8 h-14 shadow-2xl"
+              onClick={() => setAuthModalOpen(true)}
             >
               Начать бесплатно
               <Icon name="ArrowRight" size={20} className="ml-2" />
@@ -34,6 +38,7 @@ export const CTASection = () => {
               size="lg" 
               variant="outline" 
               className="border-white text-white hover:bg-white/10 text-lg px-8 h-14"
+              onClick={() => window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')}
             >
               <Icon name="Play" size={20} className="mr-2" />
               Смотреть демо
@@ -71,6 +76,12 @@ export const CTASection = () => {
           </div>
         </div>
       </div>
+      
+      <AuthModal 
+        open={authModalOpen} 
+        onOpenChange={setAuthModalOpen}
+        defaultTab="register"
+      />
     </section>
   );
 };

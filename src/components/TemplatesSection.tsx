@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import { useToast } from '@/hooks/use-toast';
+import { AuthModal } from './AuthModal';
 
 const templates = [
   {
@@ -55,6 +58,16 @@ const templates = [
 ];
 
 export const TemplatesSection = () => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleUseTemplate = (templateName: string) => {
+    toast({
+      title: 'Шаблон выбран',
+      description: `Зарегистрируйтесь чтобы использовать "${templateName}"`,
+    });
+    setAuthModalOpen(true);
+  };
   return (
     <section id="templates" className="py-20 md:py-32 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -104,7 +117,10 @@ export const TemplatesSection = () => {
                   ))}
                 </div>
 
-                <Button className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <Button 
+                  className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                  onClick={() => handleUseTemplate(template.name)}
+                >
                   <Icon name="Rocket" size={16} className="mr-2" />
                   Использовать шаблон
                 </Button>
@@ -125,12 +141,23 @@ export const TemplatesSection = () => {
         </div>
 
         <div className="text-center">
-          <Button variant="outline" size="lg" className="group">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="group"
+            onClick={() => setAuthModalOpen(true)}
+          >
             Смотреть все шаблоны
             <Icon name="ArrowRight" size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>
+      
+      <AuthModal 
+        open={authModalOpen} 
+        onOpenChange={setAuthModalOpen}
+        defaultTab="register"
+      />
     </section>
   );
 };

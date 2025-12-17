@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import { AuthModal } from './AuthModal';
 
 interface HeaderProps {
   onScrollToSection: (id: string) => void;
 }
 
 export const Header = ({ onScrollToSection }: HeaderProps) => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalTab, setAuthModalTab] = useState<'login' | 'register'>('login');
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4 py-4">
@@ -45,13 +49,35 @@ export const Header = ({ onScrollToSection }: HeaderProps) => {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={() => {
+                setAuthModalTab('login');
+                setAuthModalOpen(true);
+              }}
+            >
               Войти
             </Button>
-            <Button size="sm" className="bg-primary hover:bg-primary/90">
+            <Button 
+              size="sm" 
+              className="bg-primary hover:bg-primary/90"
+              onClick={() => {
+                setAuthModalTab('register');
+                setAuthModalOpen(true);
+              }}
+            >
               Начать бесплатно
             </Button>
           </div>
+        </div>
+      </div>
+      
+      <AuthModal 
+        open={authModalOpen} 
+        onOpenChange={setAuthModalOpen}
+        defaultTab={authModalTab}
+      />
         </div>
       </div>
     </header>
