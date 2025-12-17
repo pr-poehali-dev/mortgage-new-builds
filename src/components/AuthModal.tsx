@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import { auth } from '@/lib/auth';
 
 interface AuthModalProps {
   open: boolean;
@@ -30,14 +31,16 @@ export const AuthModal = ({ open, onOpenChange, defaultTab = 'register' }: AuthM
     const formData = new FormData(e.currentTarget);
     const email = formData.get('login-email') as string;
     
+    auth.setUser({ email });
+    
     setTimeout(() => {
       toast({
         title: 'Вход выполнен!',
-        description: `Добро пожаловать, ${email}`,
+        description: `Добро пожаловать!`,
       });
       setIsLoading(false);
       onOpenChange(false);
-    }, 1000);
+    }, 800);
   };
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,15 +49,18 @@ export const AuthModal = ({ open, onOpenChange, defaultTab = 'register' }: AuthM
     
     const formData = new FormData(e.currentTarget);
     const email = formData.get('register-email') as string;
+    const name = formData.get('register-name') as string;
+    
+    auth.setUser({ email });
     
     setTimeout(() => {
       toast({
         title: 'Регистрация успешна!',
-        description: 'Проверьте почту для подтверждения',
+        description: `Добро пожаловать, ${name}!`,
       });
       setIsLoading(false);
       onOpenChange(false);
-    }, 1000);
+    }, 800);
   };
 
   return (

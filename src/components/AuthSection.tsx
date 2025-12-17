@@ -1,16 +1,57 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import { auth } from '@/lib/auth';
 
 export const AuthSection = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [botToken, setBotToken] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    setIsAuthenticated(auth.isAuthenticated());
+    const handleAuthChange = () => setIsAuthenticated(auth.isAuthenticated());
+    window.addEventListener('auth-change', handleAuthChange);
+    return () => window.removeEventListener('auth-change', handleAuthChange);
+  }, []);
+
+  if (isAuthenticated) {
+    const user = auth.getUser();
+    return (
+      <section id="auth" className="py-20 md:py-32">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <Card className="p-8">
+              <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="CheckCircle" size={32} className="text-green-500" />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Вы уже зарегистрированы!</h3>
+              <p className="text-muted-foreground mb-6">
+                {user?.bot ? (
+                  <>Ваш бот <span className="font-mono">@{user.bot.username}</span> активен</>
+                ) : (
+                  <>Аккаунт: {user?.email}</>
+                )}
+              </p>
+              <Button 
+                variant="outline" 
+                onClick={() => auth.logout()}
+              >
+                <Icon name="LogOut" size={16} className="mr-2" />
+                Выйти
+              </Button>
+            </Card>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,9 +72,13 @@ export const AuthSection = () => {
       const data = await response.json();
 
       if (response.ok) {
+        auth.setUser({
+          email,
+          bot: data.bot
+        });
         toast({
           title: 'Успешно!',
-          description: data.message || 'Бот зарегистрирован. Проверьте почту для подтверждения.',
+          description: data.message || 'Бот зарегистрирован!',
         });
         setEmail('');
         setBotToken('');
