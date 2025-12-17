@@ -1,0 +1,30 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS CORS check",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "GET without email returns error",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "GET with email returns subscriptions",
+      "method": "GET",
+      "path": "/?email=test@example.com",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

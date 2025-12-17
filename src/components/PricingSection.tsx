@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { AuthModal } from './AuthModal';
+import { PaymentModal } from './PaymentModal';
 import { auth } from '@/lib/auth';
 import { useToast } from '@/hooks/use-toast';
 
@@ -66,6 +67,8 @@ const plans = [
 
 export const PricingSection = () => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<typeof plans[0] | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { toast } = useToast();
 
@@ -76,15 +79,24 @@ export const PricingSection = () => {
     return () => window.removeEventListener('auth-change', handleAuthChange);
   }, []);
 
-  const handlePlanClick = (planName: string) => {
+  const handlePlanClick = (plan: typeof plans[0]) => {
     if (!isAuthenticated) {
       setAuthModalOpen(true);
       return;
     }
-    toast({
-      title: 'Оформление подписки',
-      description: `Вы выбрали тариф "${planName}". Функция оплаты скоро будет доступна!`,
-    });
+    
+    // Бесплатный тариф не требует оплаты
+    if (plan.price === '0') {
+      toast({
+        title: 'Тариф активирован!',
+        description: `Вы используете бесплатный тариф "${plan.name}"`,
+      });
+      return;
+    }
+    
+    // Для платных тарифов открываем форму оплаты
+    setSelectedPlan(plan);
+    setPaymentModalOpen(true);
   };
   return (
     <section id="pricing" className="py-20 md:py-32">
@@ -142,7 +154,7 @@ export const PricingSection = () => {
                   }`}
                   variant={plan.highlighted ? 'default' : 'outline'}
                   size="lg"
-                  onClick={() => handlePlanClick(plan.name)}
+                  onClick={() => handlePlanClick(plan)}
                 >
                   {plan.cta}
                 </Button>
@@ -199,6 +211,19 @@ export const PricingSection = () => {
         onOpenChange={setAuthModalOpen}
         defaultTab="register"
       />
+      
+      {selectedPlan && (
+        <PaymentModal
+          open={paymentModalOpen}
+          onOpenChange={setPaymentModalOpen}
+          plan={{
+            name: selectedPlan.name,
+            price: selectedPlan.price,
+            features: selectedPlan.features.filter(f => f.included).map(f => f.text)
+          }}
+          userEmail={auth.getUser()?.email}
+        />
+      )}
     </section>
   );
 };

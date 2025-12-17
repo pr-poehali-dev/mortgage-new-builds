@@ -1,0 +1,50 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS CORS check",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "POST without body returns error",
+      "method": "POST",
+      "path": "/",
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "POST with invalid data returns error",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "email": "test@example.com"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "POST with valid data creates subscription",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "email": "test@example.com",
+        "plan_name": "Стартовый",
+        "amount": 990
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "order_id": "string",
+        "payment_url": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
