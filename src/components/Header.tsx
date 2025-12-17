@@ -32,24 +32,35 @@ export const Header = ({ onScrollToSection }: HeaderProps) => {
           </div>
           
           <nav className="hidden md:flex items-center gap-6">
-            <button 
-              onClick={() => onScrollToSection('features')}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Возможности
-            </button>
-            <button 
-              onClick={() => onScrollToSection('builder')}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Конструктор
-            </button>
-            <button 
-              onClick={() => onScrollToSection('templates')}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Шаблоны
-            </button>
+            {isAuthenticated ? (
+              <button 
+                onClick={() => onScrollToSection('dashboard')}
+                className="text-muted-foreground hover:text-foreground transition-colors font-medium"
+              >
+                Личный кабинет
+              </button>
+            ) : (
+              <>
+                <button 
+                  onClick={() => onScrollToSection('features')}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Возможности
+                </button>
+                <button 
+                  onClick={() => onScrollToSection('builder')}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Конструктор
+                </button>
+                <button 
+                  onClick={() => onScrollToSection('templates')}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Шаблоны
+                </button>
+              </>
+            )}
             <button 
               onClick={() => onScrollToSection('pricing')}
               className="text-muted-foreground hover:text-foreground transition-colors"
@@ -61,9 +72,15 @@ export const Header = ({ onScrollToSection }: HeaderProps) => {
           <div className="flex items-center gap-3">
             {isAuthenticated ? (
               <>
-                <span className="text-sm text-muted-foreground hidden md:inline">
-                  {auth.getUser()?.email}
-                </span>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => onScrollToSection('dashboard')}
+                  className="hidden sm:flex"
+                >
+                  <Icon name="User" size={16} className="mr-2" />
+                  Кабинет
+                </Button>
                 <Button 
                   variant="ghost" 
                   size="sm"
