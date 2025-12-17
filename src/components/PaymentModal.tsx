@@ -58,6 +58,9 @@ export const PaymentModal = ({ open, onOpenChange, plan, userEmail }: PaymentMod
         });
         onOpenChange(false);
         
+        // Отправляем событие для обновления дашборда
+        window.dispatchEvent(new Event('subscription-change'));
+        
         // В реальном приложении здесь был бы редирект на payment_url
         // window.location.href = data.payment_url;
       } else {

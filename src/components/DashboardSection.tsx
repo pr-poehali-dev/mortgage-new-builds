@@ -28,6 +28,15 @@ export const DashboardSection = () => {
     if (user?.email) {
       fetchSubscriptions();
     }
+
+    const handleSubscriptionChange = () => {
+      if (user?.email) {
+        fetchSubscriptions();
+      }
+    };
+
+    window.addEventListener('subscription-change', handleSubscriptionChange);
+    return () => window.removeEventListener('subscription-change', handleSubscriptionChange);
   }, [user?.email]);
 
   const fetchSubscriptions = async () => {
