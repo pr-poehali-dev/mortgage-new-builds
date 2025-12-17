@@ -78,8 +78,6 @@ export const Header = ({ onScrollToSection }: HeaderProps) => {
         onOpenChange={setAuthModalOpen}
         defaultTab={authModalTab}
       />
-        </div>
-      </div>
     </header>
   );
 };
