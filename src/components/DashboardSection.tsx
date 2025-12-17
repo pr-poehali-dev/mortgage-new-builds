@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { auth } from '@/lib/auth';
 import { useToast } from '@/hooks/use-toast';
+import { BotSettingsModal } from './BotSettingsModal';
 
 interface Subscription {
   id: number;
@@ -19,6 +20,7 @@ interface Subscription {
 export const DashboardSection = () => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const { toast } = useToast();
   const user = auth.getUser();
 
@@ -172,10 +174,18 @@ export const DashboardSection = () => {
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                       <span className="text-sm text-muted-foreground">Активен</span>
                     </div>
-                    <Button variant="ghost" size="sm">
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => setSettingsModalOpen(true)}
+                    >
                       <Icon name="Settings" size={16} />
                     </Button>
-                    <Button variant="ghost" size="sm">
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => toast({ title: 'Аналитика', description: 'Функция скоро будет доступна!' })}
+                    >
                       <Icon name="BarChart3" size={16} />
                     </Button>
                   </div>
@@ -258,6 +268,14 @@ export const DashboardSection = () => {
               </div>
             )}
           </Card>
+
+          {user?.bot && (
+            <BotSettingsModal
+              open={settingsModalOpen}
+              onOpenChange={setSettingsModalOpen}
+              bot={user.bot}
+            />
+          )}
         </div>
       </div>
     </section>
