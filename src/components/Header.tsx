@@ -7,38 +7,53 @@ interface HeaderProps {
 
 export const Header = ({ onScrollToSection }: HeaderProps) => {
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b">
-      <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Icon name="Home" className="text-primary" size={28} />
-          <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            ИпотекаДом
-          </span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="bg-primary p-2 rounded-lg">
+              <Icon name="Bot" size={24} className="text-primary-foreground" />
+            </div>
+            <span className="text-xl font-bold">BotBuilder</span>
+          </div>
+          
+          <nav className="hidden md:flex items-center gap-6">
+            <button 
+              onClick={() => onScrollToSection('features')}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Возможности
+            </button>
+            <button 
+              onClick={() => onScrollToSection('builder')}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Конструктор
+            </button>
+            <button 
+              onClick={() => onScrollToSection('templates')}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Шаблоны
+            </button>
+            <button 
+              onClick={() => onScrollToSection('pricing')}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Тарифы
+            </button>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="sm">
+              Войти
+            </Button>
+            <Button size="sm" className="bg-primary hover:bg-primary/90">
+              Начать бесплатно
+            </Button>
+          </div>
         </div>
-        <div className="hidden md:flex items-center gap-6">
-          <button onClick={() => onScrollToSection('hero')} className="text-foreground hover:text-primary transition-colors font-medium">
-            Главная
-          </button>
-          <button onClick={() => onScrollToSection('calculator')} className="text-foreground hover:text-primary transition-colors font-medium">
-            Калькулятор
-          </button>
-          <button onClick={() => onScrollToSection('programs')} className="text-foreground hover:text-primary transition-colors font-medium">
-            Условия
-          </button>
-          <button onClick={() => onScrollToSection('properties')} className="text-foreground hover:text-primary transition-colors font-medium">
-            Объекты
-          </button>
-          <button onClick={() => onScrollToSection('contact')} className="text-foreground hover:text-primary transition-colors font-medium">
-            Контакты
-          </button>
-        </div>
-        <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity" asChild>
-          <a href="tel:+79991574764">
-            <Icon name="Phone" size={16} className="mr-2" />
-            Позвонить
-          </a>
-        </Button>
-      </nav>
+      </div>
     </header>
   );
 };

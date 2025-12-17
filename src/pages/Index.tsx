@@ -1,19 +1,30 @@
-import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
-import { CalculatorSection } from '@/components/CalculatorSection';
-import { SectionsContent } from '@/components/SectionsContent';
+import { FeaturesSection } from '@/components/FeaturesSection';
+import { TemplatesSection } from '@/components/TemplatesSection';
+import { BuilderSection } from '@/components/BuilderSection';
+import { PricingSection } from '@/components/PricingSection';
+import { CTASection } from '@/components/CTASection';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 const Index = () => {
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-background">
       <Header onScrollToSection={scrollToSection} />
-      <HeroSection onScrollToSection={scrollToSection} />
-      <CalculatorSection />
-      <SectionsContent />
+      <main>
+        <HeroSection onScrollToSection={scrollToSection} />
+        <FeaturesSection />
+        <BuilderSection />
+        <TemplatesSection />
+        <PricingSection />
+        <CTASection />
+      </main>
+      <Footer />
     </div>
   );
 };
