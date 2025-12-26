@@ -69,32 +69,23 @@ export const SectionsContent = () => {
       setIsSubmitting(false);
     }
   };
-  const properties = [
-    {
-      title: "ЖК Волжские Паруса",
-      location: "Самара, Промышленный район",
-      price: "от 3 800 000 ₽",
-      image: "https://cdn.poehali.dev/projects/1a7c493f-b51e-41cc-b773-168038db319d/files/dac2f64c-92dc-4821-adde-b4e02f8b3070.jpg",
-      deadline: "III квартал 2025",
-      rooms: "1-3 комнатные"
-    },
-    {
-      title: "ЖК Самарский",
-      location: "Самара, Советский район",
-      price: "от 4 200 000 ₽",
-      image: "https://cdn.poehali.dev/projects/1a7c493f-b51e-41cc-b773-168038db319d/files/dac2f64c-92dc-4821-adde-b4e02f8b3070.jpg",
-      deadline: "IV квартал 2025",
-      rooms: "1-2 комнатные"
-    },
-    {
-      title: "ЖК Речной Бульвар",
-      location: "Самара, Куйбышевский район",
-      price: "от 3 500 000 ₽",
-      image: "https://cdn.poehali.dev/projects/1a7c493f-b51e-41cc-b773-168038db319d/files/dac2f64c-92dc-4821-adde-b4e02f8b3070.jpg",
-      deadline: "II квартал 2026",
-      rooms: "1-3 комнатные"
+
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  const fetchProperties = async () => {
+    setIsLoadingProperties(true);
+    try {
+      const response = await fetch('https://functions.poehali.dev/c641307d-2265-431f-a094-af55a85709de?limit=100&is_active=true');
+      const data = await response.json();
+      setProperties(data.properties || []);
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+    } finally {
+      setIsLoadingProperties(false);
     }
-  ];
+  };
 
   const programs = [
     {
