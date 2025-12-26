@@ -73,17 +73,18 @@ export const Footer = () => {
             <h4 className="font-semibold mb-4">Контакты</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="tel:+78462345678" className="hover:text-foreground transition-colors">
-                  +7 (846) 234-56-78
+                <a href="tel:+79028022220" className="hover:text-foreground transition-colors">
+                  +7 (902) 802-22-20
                 </a>
               </li>
               <li>
-                <a href="mailto:info@ipotekadom.ru" className="hover:text-foreground transition-colors">
-                  info@ipotekadom.ru
+                <a href="mailto:ipt-163@bk.ru" className="hover:text-foreground transition-colors">
+                  ipt-163@bk.ru
                 </a>
               </li>
-              <li className="pt-1">
-                г. Самара, ул. Московское шоссе, 18
+              <li className="pt-1 text-xs">
+                г. Самара, 22 Партсъезда, 173а, оф. 11<br />
+                г. Москва, Новодмитровская, 2к2
               </li>
             </ul>
           </div>

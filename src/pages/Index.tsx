@@ -1,3 +1,4 @@
+import { HeroSection } from '@/components/HeroSection';
 import { SectionsContent } from '@/components/SectionsContent';
 import { CalculatorSection } from '@/components/CalculatorSection';
 import { Header } from '@/components/Header';
@@ -13,6 +14,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header onScrollToSection={scrollToSection} />
       <main>
+        <HeroSection onScrollToSection={scrollToSection} />
         <CalculatorSection />
         <SectionsContent />
       </main>

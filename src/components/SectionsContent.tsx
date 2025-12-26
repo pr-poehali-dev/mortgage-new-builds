@@ -86,21 +86,45 @@ export const SectionsContent = () => {
   const programs = [
     {
       title: "Семейная ипотека",
-      rate: "от 5.7%",
-      description: "Для семей с детьми, рожденными с 2018 года",
-      features: ["До 12 млн в Москве", "До 6 млн в регионах", "Первый взнос от 15%"]
+      rate: "от 2%",
+      description: "Для семей с детьми",
+      features: ["ПВ от 0,1% до 20%", "Одобрение от 2 часов", "По 2 документам"]
     },
     {
       title: "IT-ипотека",
-      rate: "от 5%",
+      rate: "от 3,5%",
       description: "Для специалистов IT-отрасли",
-      features: ["До 18 млн в Москве", "До 9 млн в регионах", "Первый взнос от 15%"]
+      features: ["ПВ от 0,1% до 20%", "Одобрение от 2 часов", "По 2 документам"]
     },
     {
-      title: "Стандартная ипотека",
-      rate: "от 10.5%",
-      description: "Классическая программа для покупки новостройки",
-      features: ["До 30 млн", "Первый взнос от 15%", "Срок до 30 лет"]
+      title: "Беспроцентная рассрочка",
+      rate: "0%",
+      description: "От застройщика",
+      features: ["Без переплаты", "Гибкие условия", "Одобрение от 2 часов"]
+    },
+    {
+      title: "Ипотека на Коммерцию",
+      rate: "от 17%",
+      description: "Нежилые помещения",
+      features: ["ПВ от 0,1% до 10%", "Быстрое одобрение", "Полное сопровождение"]
+    },
+    {
+      title: "Стандартная",
+      rate: "от 17%",
+      description: "Классическая программа",
+      features: ["ПВ от 0,1% до 10%", "Срок до 30 лет", "Одобрение от 2 часов"]
+    },
+    {
+      title: "Сельская ипотека",
+      rate: "от 3%",
+      description: "Для покупки жилья в сельской местности",
+      features: ["ПВ от 10% до 30%", "Льготные условия", "Полное сопровождение"]
+    },
+    {
+      title: "Участникам СВО",
+      rate: "от 2%",
+      description: "Специальные условия",
+      features: ["Минимальный ПВ", "Льготная ставка", "Ускоренное одобрение"]
     }
   ];
 
@@ -113,7 +137,7 @@ export const SectionsContent = () => {
             <p className="text-xl text-muted-foreground">Выберите подходящую программу</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {programs.map((program, index) => (
               <Card key={index} className="border-2 hover:border-primary transition-all duration-300 hover:shadow-xl animate-scale-in" style={{ animationDelay: `${index * 100}ms` }}>
                 <CardHeader>
@@ -278,8 +302,8 @@ export const SectionsContent = () => {
                       </div>
                       <div>
                         <div className="font-semibold mb-1">Телефон</div>
-                        <a href="tel:+78462345678" className="text-primary hover:underline">
-                          +7 (846) 234-56-78
+                        <a href="tel:+79028022220" className="text-primary hover:underline">
+                          +7 (902) 802-22-20
                         </a>
                       </div>
                     </div>
@@ -294,8 +318,8 @@ export const SectionsContent = () => {
                       </div>
                       <div>
                         <div className="font-semibold mb-1">Email</div>
-                        <a href="mailto:info@ipotekadom.ru" className="text-primary hover:underline">
-                          info@ipotekadom.ru
+                        <a href="mailto:ipt-163@bk.ru" className="text-primary hover:underline">
+                          ipt-163@bk.ru
                         </a>
                       </div>
                     </div>
@@ -309,9 +333,10 @@ export const SectionsContent = () => {
                         <Icon name="MapPin" size={24} className="text-primary" />
                       </div>
                       <div>
-                        <div className="font-semibold mb-1">Адрес</div>
-                        <p className="text-muted-foreground">
-                          г. Самара, ул. Московское шоссе, 18
+                        <div className="font-semibold mb-1">Адреса</div>
+                        <p className="text-muted-foreground text-sm">
+                          г. Самара, ул. 22 Партсъезда, д. 173а, оф. 11<br />
+                          г. Москва, ул. Новодмитровская, д. 2к2
                         </p>
                       </div>
                     </div>
@@ -327,8 +352,8 @@ export const SectionsContent = () => {
                       <div>
                         <div className="font-semibold mb-1">Режим работы</div>
                         <p className="text-muted-foreground">
-                          Пн-Пт: 9:00 - 18:00<br />
-                          Сб-Вс: 10:00 - 16:00
+                          Пн-Сб: 9:00 - 20:00<br />
+                          Воскресенье: выходной
                         </p>
                       </div>
                     </div>

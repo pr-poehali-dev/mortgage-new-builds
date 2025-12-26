@@ -14,6 +14,8 @@ export const CalculatorSection = () => {
   const [interestRate, setInterestRate] = useState(10.5);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [hasCertificate, setHasCertificate] = useState(false);
+  const [programType, setProgramType] = useState<'preferential' | 'standard'>('preferential');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const calculateMortgage = () => {
@@ -55,7 +57,9 @@ export const CalculatorSection = () => {
           initialPayment: initialPayment.toLocaleString('ru-RU'),
           loanTerm,
           interestRate,
-          monthlyPayment: result.monthlyPayment.toLocaleString('ru-RU')
+          monthlyPayment: result.monthlyPayment.toLocaleString('ru-RU'),
+          hasCertificate,
+          programType
         }),
       });
 
@@ -83,8 +87,8 @@ export const CalculatorSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-4xl font-bold mb-4">Рассчитайте ипотеку</h2>
-            <p className="text-xl text-muted-foreground">Оставьте заявку и получите персональный расчёт</p>
+            <h2 className="text-4xl font-bold mb-4">Калькулятор ипотеки</h2>
+            <p className="text-xl text-muted-foreground">Заполните форму и узнайте условия ипотеки</p>
           </div>
 
           <Card className="border-0 shadow-2xl animate-scale-in">
@@ -111,6 +115,52 @@ export const CalculatorSection = () => {
                       onChange={(e) => setPhone(e.target.value)}
                       required 
                     />
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-2">
+                  <div>
+                    <Label className="mb-3 block">Первоначальный взнос</Label>
+                    <div className="flex gap-4">
+                      <Button
+                        type="button"
+                        variant={hasCertificate ? 'default' : 'outline'}
+                        onClick={() => setHasCertificate(true)}
+                        className="flex-1"
+                      >
+                        Есть сертификат
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={!hasCertificate ? 'default' : 'outline'}
+                        onClick={() => setHasCertificate(false)}
+                        className="flex-1"
+                      >
+                        Нет
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label className="mb-3 block">Ипотечная программа</Label>
+                    <div className="flex gap-4">
+                      <Button
+                        type="button"
+                        variant={programType === 'preferential' ? 'default' : 'outline'}
+                        onClick={() => setProgramType('preferential')}
+                        className="flex-1"
+                      >
+                        Льготная
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={programType === 'standard' ? 'default' : 'outline'}
+                        onClick={() => setProgramType('standard')}
+                        className="flex-1"
+                      >
+                        Стандартная
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
