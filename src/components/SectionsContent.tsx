@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 
@@ -87,53 +88,183 @@ export const SectionsContent = () => {
     }
   };
 
+  const [selectedProgram, setSelectedProgram] = useState<number | null>(null);
+
   const programs = [
     {
       title: "Семейная ипотека",
       rate: "от 2%",
       description: "Для семей с детьми",
-      features: ["ПВ от 0,1% до 20%", "Одобрение от 2 часов", "По 2 документам"]
+      features: ["ПВ от 0,1% до 20%", "Одобрение от 2 часов", "По 2 документам"],
+      detailedDescription: "Семейная ипотека — это специальная льготная программа для семей, в которых с 2018 года родился второй или последующий ребёнок. Программа позволяет купить квартиру в новостройке по ставке от 2% годовых на весь срок кредита.",
+      conditions: [
+        "Ставка: от 2% годовых",
+        "Первоначальный взнос: от 0,1% до 20%",
+        "Срок кредита: до 30 лет",
+        "Максимальная сумма: до 12 млн ₽ (Москва, МО, СПб, ЛО), до 6 млн ₽ (другие регионы)",
+        "Требования: наличие второго или последующего ребёнка, рождённого с 2018 года",
+        "Одобрение: от 2 часов",
+        "Документы: паспорт, справка о доходах или выписка по счёту"
+      ]
     },
     {
       title: "IT-ипотека",
       rate: "от 3,5%",
       description: "Для специалистов IT-отрасли",
-      features: ["ПВ от 0,1% до 20%", "Одобрение от 2 часов", "По 2 документам"]
+      features: ["ПВ от 0,1% до 20%", "Одобрение от 2 часов", "По 2 документам"],
+      detailedDescription: "IT-ипотека — льготная программа для работников аккредитованных IT-компаний. Позволяет купить квартиру или дом по низкой ставке от 3,5% годовых.",
+      conditions: [
+        "Ставка: от 3,5% годовых",
+        "Первоначальный взнос: от 0,1% до 20%",
+        "Срок кредита: до 30 лет",
+        "Максимальная сумма: до 18 млн ₽",
+        "Требования: работа в аккредитованной IT-компании не менее 3 месяцев",
+        "Объект: новостройка или готовое жильё",
+        "Одобрение: от 2 часов",
+        "Документы: паспорт, справка с работы"
+      ]
     },
     {
       title: "Беспроцентная рассрочка",
       rate: "0%",
       description: "От застройщика",
-      features: ["Без переплаты", "Гибкие условия", "Одобрение от 2 часов"]
+      features: ["Без переплаты", "Гибкие условия", "Одобрение от 2 часов"],
+      detailedDescription: "Беспроцентная рассрочка от застройщика — это уникальная возможность купить квартиру в новостройке без переплаты по процентам. Вы платите только стоимость квартиры равными частями на протяжении срока рассрочки.",
+      conditions: [
+        "Ставка: 0% — без процентов",
+        "Первоначальный взнос: от 10% до 50% (зависит от застройщика)",
+        "Срок рассрочки: от 6 месяцев до 3 лет",
+        "Платежи: равными частями ежемесячно",
+        "Требования: первоначальный взнос и документы, подтверждающие платёжеспособность",
+        "Объект: только новостройки от застройщика",
+        "Одобрение: от 2 часов",
+        "Документы: паспорт, справка о доходах (для некоторых застройщиков)"
+      ]
     },
     {
       title: "Ипотека на Коммерцию",
       rate: "от 17%",
       description: "Нежилые помещения",
-      features: ["ПВ от 0,1% до 10%", "Быстрое одобрение", "Полное сопровождение"]
+      features: ["ПВ от 0,1% до 10%", "Быстрое одобрение", "Полное сопровождение"],
+      detailedDescription: "Коммерческая ипотека — это кредит на покупку нежилых помещений для бизнеса: офисов, торговых площадей, складов, гаражей и других объектов коммерческой недвижимости.",
+      conditions: [
+        "Ставка: от 17% годовых",
+        "Первоначальный взнос: от 0,1% до 10%",
+        "Срок кредита: до 20 лет",
+        "Максимальная сумма: до 50 млн ₽",
+        "Требования: подтверждение дохода, бизнес-план (для некоторых банков)",
+        "Объект: офисы, магазины, склады, гаражи, апартаменты",
+        "Одобрение: от 3 дней",
+        "Документы: паспорт, справка о доходах, выписка по счетам"
+      ]
     },
     {
       title: "Стандартная",
       rate: "от 17%",
       description: "Классическая программа",
-      features: ["ПВ от 0,1% до 10%", "Срок до 30 лет", "Одобрение от 2 часов"]
+      features: ["ПВ от 0,1% до 10%", "Срок до 30 лет", "Одобрение от 2 часов"],
+      detailedDescription: "Стандартная ипотека — классическая программа кредитования для покупки жилья без специальных льгот. Подходит для всех категорий заёмщиков.",
+      conditions: [
+        "Ставка: от 17% годовых",
+        "Первоначальный взнос: от 0,1% до 10%",
+        "Срок кредита: до 30 лет",
+        "Максимальная сумма: без ограничений (по платёжеспособности)",
+        "Требования: возраст от 21 года, стаж работы от 3 месяцев",
+        "Объект: новостройка или вторичка",
+        "Одобрение: от 2 часов",
+        "Документы: паспорт, справка о доходах или выписка по счёту"
+      ]
     },
     {
       title: "Сельская ипотека",
       rate: "от 3%",
       description: "Для покупки жилья в сельской местности",
-      features: ["ПВ от 10% до 30%", "Льготные условия", "Полное сопровождение"]
+      features: ["ПВ от 10% до 30%", "Льготные условия", "Полное сопровождение"],
+      detailedDescription: "Сельская ипотека — льготная программа для покупки или строительства жилья на сельских территориях или в малых городах с населением до 30 тысяч человек.",
+      conditions: [
+        "Ставка: от 3% годовых",
+        "Первоначальный взнос: от 10% до 30%",
+        "Срок кредита: до 25 лет",
+        "Максимальная сумма: до 6 млн ₽",
+        "Требования: покупка жилья в сельской местности или малом городе",
+        "Объект: готовый дом, строящееся жильё, земельный участок с домом",
+        "Одобрение: от 2 часов",
+        "Документы: паспорт, справка о доходах"
+      ]
     },
     {
       title: "Участникам СВО",
       rate: "от 2%",
       description: "Специальные условия",
-      features: ["Минимальный ПВ", "Льготная ставка", "Ускоренное одобрение"]
+      features: ["Минимальный ПВ", "Льготная ставка", "Ускоренное одобрение"],
+      detailedDescription: "Специальная льготная ипотека для участников СВО и их семей. Программа предоставляет максимально выгодные условия кредитования с минимальной ставкой и первоначальным взносом.",
+      conditions: [
+        "Ставка: от 2% годовых",
+        "Первоначальный взнос: от 0,1%",
+        "Срок кредита: до 30 лет",
+        "Максимальная сумма: до 12 млн ₽",
+        "Требования: статус участника СВО или члена семьи",
+        "Объект: новостройка или вторичка",
+        "Одобрение: от 1 часа",
+        "Документы: паспорт, документы, подтверждающие статус участника СВО"
+      ]
     }
   ];
 
   return (
     <>
+      <Dialog open={selectedProgram !== null} onOpenChange={(open) => !open && setSelectedProgram(null)}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          {selectedProgram !== null && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl flex items-center justify-between">
+                  {programs[selectedProgram].title}
+                  <span className="text-primary">{programs[selectedProgram].rate}</span>
+                </DialogTitle>
+                <DialogDescription className="text-base">
+                  {programs[selectedProgram].description}
+                </DialogDescription>
+              </DialogHeader>
+              
+              <div className="space-y-6 pt-4">
+                <div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {programs[selectedProgram].detailedDescription}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-lg mb-3">Условия программы:</h4>
+                  <ul className="space-y-2">
+                    {programs[selectedProgram].conditions.map((condition, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <Icon name="CheckCircle2" size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                        <span className="text-sm">{condition}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="pt-4 border-t">
+                  <Button 
+                    className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90"
+                    onClick={() => {
+                      setSelectedProgram(null);
+                      const calcSection = document.getElementById('calculator');
+                      calcSection?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    Подать заявку
+                    <Icon name="ArrowRight" size={20} className="ml-2" />
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
       <section id="programs" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 animate-fade-in">
@@ -160,7 +291,10 @@ export const SectionsContent = () => {
                       </li>
                     ))}
                   </ul>
-                  <Button className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+                  <Button 
+                    className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90"
+                    onClick={() => setSelectedProgram(index)}
+                  >
                     Подробнее
                   </Button>
                 </CardContent>
