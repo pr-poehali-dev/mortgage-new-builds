@@ -26,94 +26,47 @@ export const Header = ({ onScrollToSection }: HeaderProps) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="bg-primary p-2 rounded-lg">
-              <Icon name="Bot" size={24} className="text-primary-foreground" />
+              <Icon name="Home" size={24} className="text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold">BotBuilder</span>
+            <span className="text-xl font-bold">ИпотекаДом</span>
           </div>
           
           <nav className="hidden md:flex items-center gap-6">
-            {isAuthenticated ? (
-              <button 
-                onClick={() => onScrollToSection('dashboard')}
-                className="text-muted-foreground hover:text-foreground transition-colors font-medium"
-              >
-                Личный кабинет
-              </button>
-            ) : (
-              <>
-                <button 
-                  onClick={() => onScrollToSection('features')}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Возможности
-                </button>
-                <button 
-                  onClick={() => onScrollToSection('builder')}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Конструктор
-                </button>
-                <button 
-                  onClick={() => onScrollToSection('templates')}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Шаблоны
-                </button>
-              </>
-            )}
             <button 
-              onClick={() => onScrollToSection('pricing')}
+              onClick={() => onScrollToSection('calculator')}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Тарифы
+              Калькулятор
+            </button>
+            <button 
+              onClick={() => onScrollToSection('programs')}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Программы
+            </button>
+            <button 
+              onClick={() => onScrollToSection('properties')}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Новостройки
+            </button>
+            <button 
+              onClick={() => onScrollToSection('contact')}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Контакты
             </button>
           </nav>
 
           <div className="flex items-center gap-3">
-            {isAuthenticated ? (
-              <>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => onScrollToSection('dashboard')}
-                  className="hidden sm:flex"
-                >
-                  <Icon name="User" size={16} className="mr-2" />
-                  Кабинет
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onClick={() => auth.logout()}
-                >
-                  <Icon name="LogOut" size={16} className="mr-2" />
-                  Выйти
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onClick={() => {
-                    setAuthModalTab('login');
-                    setAuthModalOpen(true);
-                  }}
-                >
-                  Войти
-                </Button>
-                <Button 
-                  size="sm" 
-                  className="bg-primary hover:bg-primary/90"
-                  onClick={() => {
-                    setAuthModalTab('register');
-                    setAuthModalOpen(true);
-                  }}
-                >
-                  Начать бесплатно
-                </Button>
-              </>
-            )}
+            <Button 
+              size="sm" 
+              className="bg-primary hover:bg-primary/90"
+              onClick={() => onScrollToSection('contact')}
+            >
+              <Icon name="Phone" size={16} className="mr-2" />
+              Позвонить
+            </Button>
           </div>
         </div>
       </div>
