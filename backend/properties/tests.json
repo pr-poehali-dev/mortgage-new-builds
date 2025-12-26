@@ -1,0 +1,27 @@
+{
+  "tests": [
+    {
+      "name": "Get properties list",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "properties": "array",
+        "total": "number"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Get properties with filters",
+      "method": "GET",
+      "path": "/?city=Самара&limit=10",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "properties": "array",
+        "total": "number",
+        "limit": 10
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

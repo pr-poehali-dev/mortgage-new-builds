@@ -1,4 +1,5 @@
 {
+  "properties": "https://functions.poehali.dev/c641307d-2265-431f-a094-af55a85709de",
   "subscriptions": "https://functions.poehali.dev/3b98ebd2-4e42-4ffa-a133-b5f09a16f6b7",
   "payment": "https://functions.poehali.dev/384e38fb-4a99-46a3-afc6-c290286ef765",
   "telegram": "https://functions.poehali.dev/6cd2557d-3782-4c71-98ca-444edae04c77",

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,11 +7,24 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 
+interface Property {
+  id: number;
+  title: string;
+  location: string;
+  city: string;
+  price_from: number;
+  image_url?: string;
+  deadline?: string;
+  rooms?: string;
+}
+
 export const SectionsContent = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [isLoadingProperties, setIsLoadingProperties] = useState(true);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -182,45 +195,55 @@ export const SectionsContent = () => {
             </TabsList>
 
             <TabsContent value="all" className="space-y-6">
-              <div className="grid md:grid-cols-3 gap-6">
-                {properties.map((property, index) => (
-                  <Card key={index} className="overflow-hidden hover:shadow-2xl transition-all duration-300 animate-scale-in" style={{ animationDelay: `${index * 100}ms` }}>
-                    <div className="relative h-48 overflow-hidden group">
-                      <img 
-                        src={property.image} 
-                        alt={property.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                      <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
-                        {property.price}
-                      </div>
-                    </div>
-                    <CardHeader>
-                      <CardTitle className="text-xl">{property.title}</CardTitle>
-                      <CardDescription className="flex items-center gap-1">
-                        <Icon name="MapPin" size={16} />
-                        {property.location}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2 mb-4">
-                        <div className="flex items-center gap-2 text-sm">
-                          <Icon name="Calendar" size={16} className="text-muted-foreground" />
-                          <span>Срок сдачи: {property.deadline}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Icon name="Home" size={16} className="text-muted-foreground" />
-                          <span>{property.rooms}</span>
+              {isLoadingProperties ? (
+                <div className="text-center py-12 text-muted-foreground">Загрузка...</div>
+              ) : properties.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">Новостройки скоро появятся</div>
+              ) : (
+                <div className="grid md:grid-cols-3 gap-6">
+                  {properties.map((property, index) => (
+                    <Card key={property.id} className="overflow-hidden hover:shadow-2xl transition-all duration-300 animate-scale-in" style={{ animationDelay: `${index * 100}ms` }}>
+                      <div className="relative h-48 overflow-hidden group">
+                        <img 
+                          src={property.image_url || 'https://cdn.poehali.dev/projects/1a7c493f-b51e-41cc-b773-168038db319d/files/dac2f64c-92dc-4821-adde-b4e02f8b3070.jpg'} 
+                          alt={property.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
+                          от {property.price_from.toLocaleString('ru-RU')} ₽
                         </div>
                       </div>
-                      <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">
-                        Подробнее
-                        <Icon name="ArrowRight" size={16} className="ml-2" />
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                      <CardHeader>
+                        <CardTitle className="text-xl">{property.title}</CardTitle>
+                        <CardDescription className="flex items-center gap-1">
+                          <Icon name="MapPin" size={16} />
+                          {property.location}, {property.city}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-2 mb-4">
+                          {property.deadline && (
+                            <div className="flex items-center gap-2 text-sm">
+                              <Icon name="Calendar" size={16} className="text-muted-foreground" />
+                              <span>Срок сдачи: {property.deadline}</span>
+                            </div>
+                          )}
+                          {property.rooms && (
+                            <div className="flex items-center gap-2 text-sm">
+                              <Icon name="Home" size={16} className="text-muted-foreground" />
+                              <span>{property.rooms}</span>
+                            </div>
+                          )}
+                        </div>
+                        <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">
+                          Подробнее
+                          <Icon name="ArrowRight" size={16} className="ml-2" />
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </TabsContent>
 
             {['1room', '2room', '3room'].map((tab) => (
