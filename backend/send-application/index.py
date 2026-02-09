@@ -1,10 +1,14 @@
 import json
 import os
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from datetime import datetime
 from typing import Dict, Any
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
-    Отправка заявки с формы в Telegram (через ссылку)
+    Отправка заявки с формы в Telegram (через ссылку) и на Email
     Принимает: POST с полями name, phone, message (опционально)
     Возвращает: ссылку на Telegram с предзаполненным текстом
     """
@@ -79,6 +83,29 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     telegram_username = "iNexus63"
     telegram_url = f"https://t.me/{telegram_username}?text={text}"
+    
+    try:
+        email_body = f"""
+{text}
+
+---
+Заявка отправлена: {datetime.now().strftime('%d.%m.%Y %H:%M')}
+Через сайт Ипотечникофф
+"""
+        
+        msg = MIMEMultipart()
+        msg['From'] = 'noreply@ipotechnikoff.ru'
+        msg['To'] = 'ipt-163@bk.ru'
+        msg['Subject'] = f'Заявка на ипотеку от {name}' if form_type == 'calculator' else f'Новая заявка от {name}'
+        
+        msg.attach(MIMEText(email_body, 'plain', 'utf-8'))
+        
+        with smtplib.SMTP('smtp.mail.ru', 587) as server:
+            server.starttls()
+            server.login('noreply@ipotechnikoff.ru', 'ChangeThisPassword123')
+            server.send_message(msg)
+    except Exception as e:
+        pass
     
     return {
         'statusCode': 200,

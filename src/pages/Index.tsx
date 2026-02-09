@@ -3,6 +3,7 @@ import { SectionsContent } from '@/components/SectionsContent';
 import { CalculatorSection } from '@/components/CalculatorSection';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import MortgageCalculator from '@/components/MortgageCalculator';
 
 const Index = () => {
   const scrollToSection = (id: string) => {
@@ -15,6 +16,7 @@ const Index = () => {
       <Header onScrollToSection={scrollToSection} />
       <main>
         <HeroSection onScrollToSection={scrollToSection} />
+        <MortgageCalculator />
         <CalculatorSection />
         <SectionsContent />
       </main>
