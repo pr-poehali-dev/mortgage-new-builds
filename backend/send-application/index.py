@@ -100,9 +100,13 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         msg.attach(MIMEText(email_body, 'plain', 'utf-8'))
         
+        smtp_password = os.environ.get('SMTP_PASSWORD', '')
+        if not smtp_password:
+            raise Exception('SMTP_PASSWORD не настроен')
+            
         with smtplib.SMTP('smtp.mail.ru', 587) as server:
             server.starttls()
-            server.login('noreply@ipotechnikoff.ru', 'ChangeThisPassword123')
+            server.login('noreply@ipotechnikoff.ru', smtp_password)
             server.send_message(msg)
     except Exception as e:
         pass
