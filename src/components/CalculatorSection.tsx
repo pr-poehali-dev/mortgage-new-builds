@@ -64,11 +64,14 @@ export const CalculatorSection = () => {
       });
 
       const data = await response.json();
-      if (data.success && data.telegramUrl) {
-        toast.success('Заявка отправлена!', {
-          description: 'Мы свяжемся с вами в ближайшее время',
+      if (data.success) {
+        toast.success('✅ Заявка успешно отправлена!', {
+          description: 'Мы получили ваш расчёт и свяжемся с вами в ближайшее время. Проверьте телефон!',
+          duration: 5000,
         });
-        window.open(data.telegramUrl, '_blank');
+        if (data.telegramUrl) {
+          window.open(data.telegramUrl, '_blank');
+        }
         setName('');
         setPhone('');
       }

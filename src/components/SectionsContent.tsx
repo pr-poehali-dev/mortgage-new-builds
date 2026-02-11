@@ -51,11 +51,14 @@ export const SectionsContent = () => {
 
       const data = await response.json();
       
-      if (data.telegramUrl) {
-        toast.success('Заявка отправлена!', {
-          description: 'Мы свяжемся с вами в ближайшее время',
+      if (data.success) {
+        toast.success('✅ Заявка успешно отправлена!', {
+          description: 'Мы получили ваше сообщение и свяжемся с вами в ближайшее время. Проверьте телефон!',
+          duration: 5000,
         });
-        window.open(data.telegramUrl, '_blank');
+        if (data.telegramUrl) {
+          window.open(data.telegramUrl, '_blank');
+        }
       }
 
       setName('');
