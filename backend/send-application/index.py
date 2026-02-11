@@ -84,6 +84,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     telegram_username = "iNexus63"
     telegram_url = f"https://t.me/{telegram_username}?text={text}"
     
+    email_sent = False
+    email_error = None
+    
     try:
         email_body = f"""
 {text}
@@ -108,8 +111,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             server.starttls()
             server.login('noreply@ipotechnikoff.ru', smtp_password)
             server.send_message(msg)
+        
+        email_sent = True
+        print(f"Email успешно отправлен на ipt-163@bk.ru")
     except Exception as e:
-        pass
+        email_error = str(e)
+        print(f"Ошибка отправки email: {email_error}")
     
     return {
         'statusCode': 200,
