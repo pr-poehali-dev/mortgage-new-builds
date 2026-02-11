@@ -10,7 +10,7 @@ export const Footer = () => {
               <div className="bg-primary p-2 rounded-lg">
                 <Icon name="Home" size={20} className="text-primary-foreground" />
               </div>
-              <span className="text-lg font-bold">ИпотекаДом</span>
+              <span className="text-lg font-bold">Ипотечникофф</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Ваш надёжный партнёр в получении ипотеки на новостройки в Самаре
@@ -92,7 +92,7 @@ export const Footer = () => {
 
         <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2024 ИпотекаДом. Все права защищены.
+            © 2024 Ипотечникофф. Все права защищены.
           </p>
         </div>
       </div>
