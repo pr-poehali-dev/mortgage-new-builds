@@ -20,6 +20,7 @@ const Index = () => {
         <MortgageCalculator />
         <CalculatorSection />
         <SectionsContent />
+        <TestimonialsSection />
       </main>
       <Footer />
     </div>
