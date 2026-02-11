@@ -97,7 +97,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 """
         
         msg = MIMEMultipart()
-        msg['From'] = 'noreply@ipotechnikoff.ru'
+        msg['From'] = 'ipt-163@bk.ru'
         msg['To'] = 'ipt-163@bk.ru'
         msg['Subject'] = f'Заявка на ипотеку от {name}' if form_type == 'calculator' else f'Новая заявка от {name}'
         
@@ -109,7 +109,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             
         with smtplib.SMTP('smtp.mail.ru', 587) as server:
             server.starttls()
-            server.login('noreply@ipotechnikoff.ru', smtp_password)
+            server.login('ipt-163@bk.ru', smtp_password)
             server.send_message(msg)
         
         email_sent = True
