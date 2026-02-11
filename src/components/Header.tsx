@@ -63,7 +63,7 @@ export const Header = ({ onScrollToSection }: HeaderProps) => {
           <div className="flex items-center gap-3">
             <Button 
               size="sm" 
-              className="bg-primary hover:bg-primary/90"
+              className="bg-green-600 hover:bg-green-700 text-white"
               onClick={() => onScrollToSection('contact')}
             >
               <Icon name="Phone" size={16} className="mr-2" />
