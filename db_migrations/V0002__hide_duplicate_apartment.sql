@@ -1,0 +1,1 @@
+UPDATE t_p44352831_mortgage_new_builds.properties SET is_active = false WHERE id = 2;
