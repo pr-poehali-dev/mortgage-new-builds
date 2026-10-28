@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { getRouteApi } from '@tanstack/react-router';
+import { PropertyApplyDialog } from './PropertyApplyDialog';
 
 const indexRoute = getRouteApi('/');
 
@@ -119,6 +120,10 @@ export const PropertiesSection = () => {
                 </div>
               )}
             </div>
+            <PropertyApplyDialog
+              propertyTitle={property.title}
+              propertyInfo={`${property.city}, ${property.location}, ${property.price_from.toLocaleString('ru-RU')} ₽`}
+            />
           </CardContent>
         </Card>
       ))}
