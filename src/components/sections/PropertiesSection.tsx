@@ -9,9 +9,36 @@ export interface Property {
   city: string;
   price_from: number;
   image_url?: string;
+  images?: string[];
   deadline?: string;
   rooms?: string;
 }
+
+const PropertyGallery = ({ images, title }: { images: string[]; title: string }) => {
+  const [index, setIndex] = useState(0);
+  const isPlan = index > 0;
+
+  return (
+    <div className={`h-48 relative overflow-hidden ${isPlan ? 'bg-white' : ''}`}>
+      <img
+        src={images[index]}
+        alt={title}
+        className={`w-full h-full ${isPlan ? 'object-contain' : 'object-cover'}`}
+      />
+      {images.length > 1 && (
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`h-2 w-2 rounded-full border border-white/80 ${i === index ? 'bg-primary' : 'bg-black/30'}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const PropertiesSection = () => {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -54,14 +81,11 @@ export const PropertiesSection = () => {
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {properties.map((property) => (
         <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-all duration-300">
-          {property.image_url && (
-            <div className="h-48 overflow-hidden">
-              <img
-                src={property.image_url}
-                alt={property.title}
-                className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-              />
-            </div>
+          {(property.images?.length || property.image_url) && (
+            <PropertyGallery
+              images={property.images?.length ? property.images : [property.image_url as string]}
+              title={property.title}
+            />
           )}
           <CardHeader>
             <CardTitle className="text-lg">{property.title}</CardTitle>

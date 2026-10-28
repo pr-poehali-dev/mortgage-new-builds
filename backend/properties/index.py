@@ -53,7 +53,7 @@ def handler(event: dict, context) -> dict:
                     SELECT id, title, developer, location, city, district, 
                            price_from, image_url, deadline, rooms, description,
                            area_from, area_to, website_url, is_active,
-                           created_at, updated_at
+                           created_at, updated_at, images
                     FROM t_p44352831_mortgage_new_builds.properties
                     {where_clause}
                     ORDER BY created_at DESC

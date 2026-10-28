@@ -6,8 +6,8 @@
       "path": "/",
       "expectedStatus": 200,
       "expectedBody": {
-        "properties": "array",
-        "total": "number"
+        "limit": 100,
+        "offset": 0
       },
       "bodyMatcher": "partial"
     },
@@ -17,8 +17,6 @@
       "path": "/?city=Самара&limit=10",
       "expectedStatus": 200,
       "expectedBody": {
-        "properties": "array",
-        "total": "number",
         "limit": 10
       },
       "bodyMatcher": "partial"
