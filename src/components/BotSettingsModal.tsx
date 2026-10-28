@@ -59,7 +59,7 @@ export const BotSettingsModal = ({ open, onOpenChange, bot }: BotSettingsModalPr
   ]);
 
   const [newCommand, setNewCommand] = useState({ command: '', description: '', response: '' });
-  const [newButton, setNewButton] = useState({ text: '', action: 'message' as const, value: '' });
+  const [newButton, setNewButton] = useState<Omit<BotButton, 'id'>>({ text: '', action: 'message', value: '' });
   const [editingCommand, setEditingCommand] = useState<Command | null>(null);
   const [editingButton, setEditingButton] = useState<BotButton | null>(null);
 
@@ -430,7 +430,7 @@ export const BotSettingsModal = ({ open, onOpenChange, bot }: BotSettingsModalPr
                   <select
                     className="w-full p-2 rounded-lg border border-input bg-background"
                     value={newButton.action}
-                    onChange={(e) => setNewButton({ ...newButton, action: e.target.value as any })}
+                    onChange={(e) => setNewButton({ ...newButton, action: e.target.value as BotButton['action'] })}
                   >
                     <option value="message">Отправить сообщение</option>
                     <option value="command">Выполнить команду</option>

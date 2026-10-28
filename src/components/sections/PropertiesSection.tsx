@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
+import { getRouteApi } from '@tanstack/react-router';
+
+const indexRoute = getRouteApi('/');
 
 export interface Property {
   id: number;
@@ -41,12 +44,13 @@ const PropertyGallery = ({ images, title }: { images: string[]; title: string })
 };
 
 export const PropertiesSection = () => {
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [isLoadingProperties, setIsLoadingProperties] = useState(true);
+  const loaded = indexRoute.useLoaderData().properties;
+  const [properties, setProperties] = useState<Property[]>(loaded ?? []);
+  const [isLoadingProperties, setIsLoadingProperties] = useState(loaded === null);
 
   useEffect(() => {
-    fetchProperties();
-  }, []);
+    if (loaded === null) fetchProperties();
+  }, [loaded]);
 
   const fetchProperties = async () => {
     setIsLoadingProperties(true);
